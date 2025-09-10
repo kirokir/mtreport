@@ -1,20 +1,26 @@
 {
-    "name": "Python 3 Default",
-    "image": "mcr.microsoft.com/devcontainers/python:0-3.12",
-    "features": {
-        "ghcr.io/devcontainers/features/python:1": {
-            "version": "3.12"
-        }
-    },
-    // This command runs AFTER the container is created.
-    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libgl1-mesa-glx && python -m pip install .",
+  "name": "ML Training Platform Environment",
+  "image": "mcr.microsoft.com/devcontainers/python:0-3.12",
 
-    // Forward the Streamlit port
-    "forwardPorts": [8501],
-    "portsAttributes": {
-        "8501": {
-            "label": "Streamlit App",
-            "onAutoForward": "openPreview"
-        }
+  // This command installs the CORRECT system library and then your Python packages.
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libgl1 && python -m pip install .",
+
+  // Port forwarding for Streamlit
+  "forwardPorts": [8501],
+  "portsAttributes": {
+    "8501": {
+      "label": "Streamlit App",
+      "onAutoForward": "openBrowser"
     }
+  },
+
+  // Optional: Add VS Code extensions for a better experience
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance"
+      ]
+    }
+  }
 }
