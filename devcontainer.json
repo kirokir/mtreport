@@ -1,0 +1,20 @@
+{
+    "name": "Python 3 Default",
+    "image": "mcr.microsoft.com/devcontainers/python:0-3.12",
+    "features": {
+        "ghcr.io/devcontainers/features/python:1": {
+            "version": "3.12"
+        }
+    },
+    // This command runs AFTER the container is created.
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y libgl1-mesa-glx && python -m pip install .",
+
+    // Forward the Streamlit port
+    "forwardPorts": [8501],
+    "portsAttributes": {
+        "8501": {
+            "label": "Streamlit App",
+            "onAutoForward": "openPreview"
+        }
+    }
+}

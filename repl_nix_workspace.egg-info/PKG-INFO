@@ -1,0 +1,27 @@
+Metadata-Version: 2.4
+Name: repl-nix-workspace
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: >=3.11
+License-File: LICENSE
+Requires-Dist: matplotlib>=3.10.6
+Requires-Dist: pydantic>=2.11.7
+Requires-Dist: scikit-learn>=1.7.2
+Requires-Dist: streamlit-ace>=0.1.1
+Requires-Dist: streamlit>=1.49.1
+Requires-Dist: tensorflow>=2.20.0
+Requires-Dist: numpy>=2.3.3
+Requires-Dist: plotly>=6.3.0
+Requires-Dist: weasyprint>=66.0
+Requires-Dist: onnxruntime>=1.22.1
+Requires-Dist: mlflow>=3.3.2
+Requires-Dist: pandas>=2.3.2
+Requires-Dist: jinja2>=3.1.6
+Requires-Dist: pillow>=11.3.0
+Requires-Dist: opencv-python>=4.11.0.86
+Requires-Dist: uvicorn>=0.35.0
+Requires-Dist: seaborn>=0.13.2
+Requires-Dist: fastapi>=0.116.1
+Requires-Dist: scipy>=1.16.1
+Requires-Dist: tf2onnx>=1.8.4
+Dynamic: license-file

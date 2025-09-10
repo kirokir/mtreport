@@ -25,3 +25,13 @@ dependencies = [
     "scipy>=1.16.1",
     "tf2onnx>=1.8.4",
 ]
+
+# --- ADD THIS NEW SECTION AT THE END ---
+[tool.setuptools]
+packages = [
+    "data_modules",
+    "models",
+    "reports",
+    "scripts",
+    "tests"
+]
