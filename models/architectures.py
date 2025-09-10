@@ -4,7 +4,7 @@ Factory classes for creating different model types.
 """
 
 from abc import ABC, abstractmethod
-from typing import Dict, Any, Tuple, Optional
+from typing import Dict, Any, Tuple, Optional, List
 import logging
 
 import tensorflow as tf
