@@ -16,7 +16,7 @@ A comprehensive machine learning platform built with Streamlit for training, mon
 
 ---
 
-## 🚀 Features
+##  Features
 
 - **Multi-tab Interface**: Intuitive web UI for the complete ML workflow.
 - **Versatile Data Loaders**: Supports images (PNG, JPG), skeleton JSON, and CSV/tabular data.
@@ -27,7 +27,7 @@ A comprehensive machine learning platform built with Streamlit for training, mon
 
 ---
 
-## 🛠️ Getting Started: Running Locally
+##  Getting Started: Running Locally
 
 Follow these instructions to run the ML Training Platform on your own computer.
 
