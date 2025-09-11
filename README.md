@@ -3,7 +3,7 @@ MIMICA ML Training Platform - by DEAR&CO   : https://dear.is-a.dev/
 A comprehensive machine learning platform built with Streamlit for training, monitoring, and evaluating models for image, skeleton, and tabular data.
 
 <p align="center">
-  <img src=".github/logo.png" alt="Project Logo" width="150"/>
+  <img src="github/logo.png" alt="Project Logo" width="150"/>
 </p>
 
 <h1 align="center">ML Training Platform- MIMICA MLTP V1.3</h1>
@@ -11,7 +11,7 @@ A comprehensive machine learning platform built with Streamlit for training, mon
 A comprehensive machine learning platform built with Streamlit for training, monitoring, and evaluating models for image, skeleton, and tabular data.
 
 <p align="center">
-  <img src=".github/ui_screenshot.png" alt="Application User Interface Screenshot" width="800"/>
+  <img src="github/ui_screenshot.png" alt="Application User Interface Screenshot" width="800"/>
 </p>
 
 ---
