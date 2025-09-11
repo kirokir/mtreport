@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>Windows Step-by-Step ML Report Guide</title>
+    <style>
+        /* CSS Root Variables for Theming */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #212529;
+            --header-color: #343a40;
+            --primary-color: #007bff;
+            --border-color: #dee2e6;
+            --container-bg: #f8f9fa;
+            --code-bg: #e9ecef;
+            --code-text: #212529;
+            --pre-bg: #f1f3f5;
+            --link-color: #0056b3;
+            --button-bg: #6c757d;
+            --button-hover-bg: #5a6268;
+            --shadow-color: rgba(0,0,0,0.05);
+        }
+
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-color: #e8eaed;
+            --primary-color: #64b5f6;
+            --border-color: #444;
+            --container-bg: #1e1e1e;
+            --code-bg: #2a2a2a;
+            --code-text: #d4d4d4;
+            --pre-bg: #252526;
+            --link-color: #90caf9;
+            --button-bg: #424242;
+            --button-hover-bg: #555555;
+            --shadow-color: rgba(0,0,0,0.25);
+        }
+
+        /* General Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.7;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 1rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .main-container {
+            max-width: 960px;
+            margin: 1rem auto;
+            padding: 2rem;
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px var(--shadow-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        /* Header and Footer */
+        .page-header, .page-footer {
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.9em;
+            color: var(--text-color);
+            opacity: 0.8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .page-header-text a {
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        /* Theme Switcher */
+        .theme-switcher { display: flex; align-items: center; gap: 10px; font-size: 0.9em; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        /* Typography */
+        h1, h2 {
+            color: var(--header-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        h1 { font-size: 2.5em; text-align: center; border-bottom: none; }
+        h2 { font-size: 1.8em; }
+        h3 { font-size: 1.4em; color: var(--header-color); margin-top: 1.8rem; margin-bottom: 1rem; }
+        a { color: var(--link-color); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Code Blocks */
+        .code-container {
+            position: relative;
+            margin: 1.5rem 0;
+        }
+        pre {
+            background-color: var(--pre-bg);
+            border: 1px solid var(--border-color);
+            color: var(--code-text);
+            padding: 1.2rem;
+            padding-top: 2.8rem; /* Space for button */
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.95em;
+        }
+        code {
+            font-family: "SF Mono", "Consolas", "Courier New", monospace;
+        }
+        pre code {
+            color: var(--code-text);
+        }
+        p > code, li > code {
+            background-color: var(--code-bg);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 6px 12px;
+            font-size: 0.8em;
+            background-color: var(--button-bg);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            opacity: 0.8;
+        }
+        .copy-btn:hover {
+            background-color: var(--button-hover-bg);
+            opacity: 1;
+        }
+        
+        /* Report Section */
+        #report-section {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            background-color: var(--bg-color);
+        }
+        #report-content {
+            width: 100%;
+            height: 500px;
+            box-sizing: border-box;
+            padding: 1rem;
+            font-family: "Courier New", monospace;
+            font-size: 0.95em;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            resize: vertical;
+            background-color: var(--container-bg);
+            color: var(--text-color);
+        }
+        .report-buttons {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+        .report-buttons button {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .report-buttons button:hover {
+            opacity: 0.85;
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                background-color: #fff;
+                color: #000;
+            }
+            .main-container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+            .page-header, .page-footer, .copy-btn, .report-buttons, #report-section h2 {
+                display: none;
+            }
+            h1,h2,h3 {
+                color: #000 !important;
+                page-break-after: avoid;
+            }
+            pre {
+                background-color: #f5f5f5 !important;
+                border: 1px solid #ccc !important;
+                white-space: pre-wrap; /* Wrap long lines */
+                word-wrap: break-word; /* Break words if needed */
+            }
+            a {
+                color: #000 !important;
+                text-decoration: none;
+            }
+            #report-section {
+                border: none;
+                padding: 0;
+            }
+            #report-content {
+                border: 1px solid #ccc !important;
+                height: auto;
+                color: #000;
+                background-color: #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <span class="page-header-text">Guide prepared by <a href="https://dear.is-a.dev/" target="_blank" rel="noopener noreferrer">DEAR&CO</a></span>
+        <div class="theme-switcher">
+            <span>Light</span>
+            <label class="switch">
+                <input type="checkbox" id="theme-toggle">
+                <span class="slider"></span>
+            </label>
+            <span>Dark</span>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <h1>Windows Step-by-Step Guide (with Report Format)</h1>
+        <p style="text-align:center; font-size: 1.1em; opacity:0.9;">
+            THE APP CAN BE FOUND - <a href="https://dcomltp.streamlit.app/" target="_blank" rel="noopener noreferrer">https://dcomltp.streamlit.app/</a><br>
+            THE REPO WITH INSTRUCTIONS TO RUN THE APP ON A LOCAL DEVICE CAN BE FOUND - <a href="https://github.com/kirokir/mtreport/blob/main/README.md" target="_blank" rel="noopener noreferrer">GitHub Repo</a>
+        </p>
+        <p style="text-align:center;">
+            ---OR YOU CAN USE THE INSTRUCTIONS MARKED AS STEPS TO GET REPORTS AS DONE IN THE ORIGINAL METHOD USING JUPYTER NOTEBOOKS
+        </p>
+
+        <h2>1. Install prerequisites</h2>
+        <ol>
+            <li>Install <strong>Python 3.10</strong> (from <a href="https://www.python.org/downloads/windows/" target="_blank" rel="noopener noreferrer">python.org</a>) and check:
+                <div class="code-container">
+                    <button class="copy-btn">Copy</button>
+                    <pre><code class="language-powershell">python --version</code></pre>
+                </div>
+            </li>
+            <li>Install <strong>VS Code</strong> and add the <strong>Python</strong> + <strong>Jupyter</strong> extensions.</li>
+            <li>Install Git (optional, but useful).</li>
+        </ol>
+
+        <h2>2. Create project folder and virtual environment</h2>
+        <p>Open <strong>PowerShell</strong>:</p>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-powershell">mkdir ml_report_project
+cd ml_report_project
+python -m venv .venv
+.venv\Scripts\activate</code></pre>
+        </div>
+
+        <h2>3. Install required packages</h2>
+        <p>Create a file <code>requirements.txt</code>:</p>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-text">numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+tensorflow==2.12.0
+jupyterlab
+notebook</code></pre>
+        </div>
+        <p>Install:</p>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-powershell">pip install -r requirements.txt</code></pre>
+        </div>
+
+        <h2>4. Start Jupyter Notebook in VS Code</h2>
+        <ul>
+            <li>Open <code>ml_report_project</code> in VS Code.</li>
+            <li>Create new file → <code>assignment.ipynb</code>.</li>
+            <li>Select Python kernel: <code>.\.venv\Scripts\python.exe</code>.</li>
+        </ul>
+
+        <h2>5. Notebook cells (copy–paste in order)</h2>
+
+        <h3>Cell 0 — Title</h3>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-markdown"># Assignment: Can You Teach a Machine to Read?
+
+Datasets: Fashion-MNIST (CSV) and CIFAR-10 (CSV subset).  
+Outputs: dataset exploration, MLP & CNN training, evaluation, confusion matrices, and comparisons.</code></pre>
+        </div>
+
+        <h3>Cell 1 — Imports</h3>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-python">import numpy as np, pandas as pd, matplotlib.pyplot as plt, seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from tensorflow.keras import layers, models</code></pre>
+        </div>
+
+        <h3>Cell 2 — Load Fashion-MNIST CSV</h3>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-python">df_fashion = pd.read_csv("fashion_mnist.csv")
+y_fashion = df_fashion['label'].values
+Xf = df_fashion.drop('label', axis=1).values.reshape(-1,28,28)/255.0
+
+class_names_fashion = ['T-shirt/top','Trouser','Pullover','Dress','Coat',
+                       'Sandal','Shirt','Sneaker','Bag','Ankle boot']
+print("Fashion-MNIST:", Xf.shape, y_fashion.shape)</code></pre>
+        </div>
+
+        <h3>Cell 3 — Visualize</h3>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-python">plt.figure(figsize=(8,8))
+for i in range(25):
+    plt.subplot(5,5,i+1)
+    plt.imshow(Xf[i], cmap='gray')
+    plt.title(class_names_fashion[y_fashion[i]], fontsize=8)
+    plt.axis("off")
+plt.show()</code></pre>
+        </div>
+
+        <h3>Cell 4 — Build Models</h3>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-python">def build_mlp(input_shape=(28,28), num_classes=10):
+    m = models.Sequential([
+        layers.Flatten(input_shape=input_shape),
+        layers.Dense(128, activation='relu'),
+        layers.Dropout(0.2),
+        layers.Dense(num_classes, activation='softmax')
+    ])
+    m.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    return m
+
+def build_cnn(input_shape=(28,28,1), num_classes=10):
+    m = models.Sequential([
+        layers.Conv2D(32,(3,3),activation='relu',input_shape=input_shape),
+        layers.MaxPooling2D(2,2),
+        layers.Conv2D(64,(3,3),activation='relu'),
+        layers.MaxPooling2D(2,2),
+        layers.Flatten(),
+        layers.Dense(128,activation='relu'),
+        layers.Dropout(0.3),
+        layers.Dense(num_classes,activation='softmax')
+    ])
+    m.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    return m</code></pre>
+        </div>
+
+        <h3>Cell 5 — Train Fashion CNN</h3>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-python">X_train,X_test,y_train,y_test = train_test_split(Xf,y_fashion,test_size=0.2,random_state=42)
+
+cnn = build_cnn((28,28,1))
+history_cnn = cnn.fit(X_train.reshape(-1,28,28,1), y_train,
+                      validation_split=0.1, epochs=10, batch_size=64)</code></pre>
+        </div>
+
+        <h3>Cell 6 — Evaluate Fashion CNN</h3>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-python">test_loss,test_acc = cnn.evaluate(X_test.reshape(-1,28,28,1), y_test)
+print("Fashion CNN Test Accuracy:", test_acc)
+
+plt.plot(history_cnn.history['accuracy'], label="Train Acc")
+plt.plot(history_cnn.history['val_accuracy'], label="Val Acc")
+plt.xlabel("Epoch"); plt.ylabel("Accuracy"); plt.legend(); plt.show()
+
+y_pred = np.argmax(cnn.predict(X_test.reshape(-1,28,28,1)),axis=1)
+cm = confusion_matrix(y_test,y_pred)
+ConfusionMatrixDisplay(cm, display_labels=class_names_fashion).plot(xticks_rotation=45)</code></pre>
+        </div>
+
+        <h3>Cell 7 — Load CIFAR-10 Subset CSV</h3>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-python">df_cifar = pd.read_csv("cifar10_small.csv")  # created with keras.datasets earlier
+yc = df_cifar['label'].values
+Xc = df_cifar.drop('label', axis=1).values.reshape(-1,32,32,3)/255.0
+print("CIFAR-10:", Xc.shape, yc.shape)</code></pre>
+        </div>
+
+        <h3>Cell 8 — Train CIFAR CNN</h3>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-python">Xc_train,Xc_test,yc_train,yc_test = train_test_split(Xc,yc,test_size=0.2,random_state=42)
+
+cnn_cifar = build_cnn((32,32,3))
+history_cifar = cnn_cifar.fit(Xc_train,yc_train, validation_split=0.1, epochs=10, batch_size=64)
+
+loss_c,acc_c = cnn_cifar.evaluate(Xc_test,yc_test)
+print("CIFAR-10 CNN Test Accuracy:", acc_c)</code></pre>
+        </div>
+
+        <h3>Cell 9 — Compare Fashion vs CIFAR</h3>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-python">plt.plot(history_cnn.history['val_accuracy'], label="Fashion-MNIST")
+plt.plot(history_cifar.history['val_accuracy'], label="CIFAR-10")
+plt.xlabel("Epoch"); plt.ylabel("Validation Accuracy"); plt.legend(); plt.show()</code></pre>
+        </div>
+        
+        <h2>6. Export to Report (Notebook → PDF/HTML)</h2>
+        <p>On Windows in VS Code:</p>
+        <ul>
+            <li>From top menu: <code>Export → PDF</code> (requires LaTeX installed) or</li>
+            <li><code>Export → HTML</code> (always works).</li>
+        </ul>
+        <p>Or from PowerShell:</p>
+        <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code class="language-powershell">jupyter nbconvert --to html assignment.ipynb</code></pre>
+        </div>
+        
+        <div id="report-section">
+            <h2>📑 Editable Report Format (Auto-generated from Notebook)</h2>
+            <textarea id="report-content">
+# Report: Can You Teach a Machine to Read?
+
+## Dataset Exploration
+- Dataset: Fashion-MNIST (60,000 images, 10 classes, grayscale 28x28).
+- CIFAR-10 Subset (1,000 images, 10 classes, color 32x32).
+- Visual samples shown.
+
+## Model Design
+- Baseline: MLP with Dense layers.
+- Improved: CNN with Conv2D + MaxPooling.
+
+## Training Results
+- Fashion-MNIST CNN Test Accuracy: __0.___  
+- CIFAR-10 CNN Test Accuracy: __0.___
+
+## Training Curves
+(Accuracy vs Epoch plots)
+
+## Confusion Matrices
+- Fashion-MNIST: Most confusion between Shirt and T-shirt/Coat.
+- CIFAR-10: Errors common between Dog/Cat, Truck/Automobile.
+
+## Comparison
+- CNN achieves higher accuracy on Fashion-MNIST (~__92__%) vs CIFAR-10 (~__65__%).  
+- CIFAR-10 requires deeper models or augmentation.
+
+## Conclusion
+CNNs classify simpler grayscale clothing well. More complex natural images need more capacity.
+            </textarea>
+            <div class="report-buttons">
+                <button id="download-word">Download as .doc (MS Word)</button>
+                <button id="download-pdf">Save as PDF (Print)</button>
+            </div>
+        </div>
+        
+        <p style="text-align:center; margin-top: 3rem; font-weight:bold;">✅ That’s it: With this guide, you can:</p>
+        <ul style="max-width: 600px; margin: 1rem auto;">
+            <li>Run everything in <strong>Windows + VS Code + Jupyter</strong>,</li>
+            <li>Train on Fashion-MNIST CSV and CIFAR-10 CSV,</li>
+            <li>Generate plots + confusion matrices,</li>
+            <li>Export directly as HTML/PDF report in the correct format.</li>
+        </ul>
+        <p style="text-align:center; margin-top:2rem;"> </p>
+
+    </div>
+
+    <footer class="page-footer">
+        <span>Guide prepared by <a href="https://dear.is-a.dev/" target="_blank" rel="noopener noreferrer">DEAR&CO</a></span>
+        <span>Content Accurate as of Sept 2025</span>
+    </footer>
+    
+    <script>
+        // --- Theme Switcher ---
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Check for saved theme in localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.checked = true;
+        }
+
+        themeToggle.addEventListener('change', () => {
+            if (themeToggle.checked) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // --- Copy Buttons ---
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const pre = button.parentElement.querySelector('pre');
+                const code = pre.querySelector('code');
+                const textToCopy = code.innerText;
+                
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    const originalText = button.innerText;
+                    button.innerText = 'Copied!';
+                    setTimeout(() => {
+                        button.innerText = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            });
+        });
+
+        // --- Report Download Buttons ---
+        const downloadWordBtn = document.getElementById('download-word');
+        const downloadPdfBtn = document.getElementById('download-pdf');
+        const reportContent = document.getElementById('report-content');
+
+        downloadWordBtn.addEventListener('click', () => {
+            const text = reportContent.value;
+            const blob = new Blob([text], { type: 'application/msword' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'report.doc';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+
+        downloadPdfBtn.addEventListener('click', () => {
+            window.print();
+        });
+
+    </script>
+</body>
+</html>
