@@ -17,7 +17,7 @@ A comprehensive machine learning platform built with Streamlit for training, mon
 
 An easy guide for running analysis on local device without using the app can be found at- 
 <p align="center">  
-  https://github.com/kirokir/mtreport/edit/main/github/guide.html 
+https://kirokir.github.io/amimica/guide.html
   </p>
   
 
